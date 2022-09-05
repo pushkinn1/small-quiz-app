@@ -7,8 +7,6 @@
   "scripts": {
     "start": "webpack && npx webpack serve",
     "start:api": "npx json-server -w ./src/db.json",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d dist",
     "build": "webpack"
   },
   "keywords": [],
@@ -32,7 +30,6 @@
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.25",
     "babel-loader": "^8.2.5",
-    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "react-svg-loader": "^3.0.3",
     "style-loader": "^3.3.1",

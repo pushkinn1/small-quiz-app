@@ -17,11 +17,11 @@ import { useEffect, useState } from "react";
 import { RequestErrorMessage } from "../../requestErrorMessage";
 import { Loading } from "../../loading";
 
-export type TestPageProps = {
+export type TestDisplayProps = {
     themeId: number
 }
 
-export const TestPage: React.FC<TestPageProps> = props => {
+export const TestDisplay: React.FC<TestDisplayProps> = props => {
 
     const { questionIds } = useQuestionIds(props.themeId)
 
@@ -126,24 +126,6 @@ export const TestPage: React.FC<TestPageProps> = props => {
 
     }, [questionNumber, questionIds])
 
-    useEffect(() => {
-        const getThemeName = async () => {
-            setLoading(true)
-            try {
-                const themeName = await api.questions.getThemeNameById(props.themeId)
-                setThemeName(themeName)
-            }
-            catch (err) {
-                setRequestError(true)
-            }
-            finally {
-                setLoading(false)
-            }
-        }
-
-        getThemeName()
-    }, [])
-
     useBeforeunload((e) => {
         e.returnValue = true
     })
@@ -196,10 +178,6 @@ export const TestPage: React.FC<TestPageProps> = props => {
 
     return (
         <FlexCol gap={20}>
-            <H1>
-                Test theme: {themeName}
-            </H1>
-
             <FlexRow gap={30}>
                 {testEnded ||
                     <FlexRow gap={20}>

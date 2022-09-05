@@ -2,9 +2,10 @@
     "questions": [
         {
             "id": 12,
-            "answer": "ans",
-            "question": "what is?",
-            "type": "text"
+            "question": "what is plane?",
+            "answer": "flying thing",
+            "options": ["flying thing", "cat"],
+            "type": "select"
         },
         {
             "id": 11,
@@ -13,18 +14,24 @@
             "type": "text"
         },
         {
+            "id": 45,
+            "answer": "of course",
+            "question": "winter is close?",
+            "options": ["of course"],
+            "type": "select"
+        },
+        {
             "id": 28,
-            "answer": "two2",
-            "options": ["one2", "two2", "three"],
-            "question": "what is2?",
+            "answer": "great",
+            "options": ["great", "not bad", "bad"],
+            "question": "how are u?",
             "type": "select"
         },
         {
             "id": 31,
-            "answer": "two3",
-            "options": ["one3", "two3"],
-            "question": "what is?3",
-            "type": "select"
+            "answer": "i dont know",
+            "question": "what is derivative?",
+            "type": "text"
         }
     ],
     "themes": [
@@ -41,7 +48,7 @@
         {
             "id": 2,
             "name": "Game of thrones",
-            "qIds": [11]
+            "qIds": [11, 45]
         }
     ]
 }
