@@ -8,11 +8,10 @@ import { Header } from "./components/header";
 import { Wrapper } from "./components/layout";
 import { FontStyles } from "./fonts/fontStyles";
 import { Main } from "./components/general/Main";
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'normalize-css'
-import { ROUTES } from "./utils/routes";
 import { GlobalStyle } from "./globalStyle";
+import { ROUTES } from "./utils/routes";
+import 'normalize-css'
+
 
 export const App: React.FC = () => (
     <React.StrictMode>
