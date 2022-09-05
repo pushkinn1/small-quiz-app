@@ -33,6 +33,7 @@
     "@types/styled-components": "^5.1.25",
     "babel-loader": "^8.2.5",
     "gh-pages": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
     "react-svg-loader": "^3.0.3",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.5",
