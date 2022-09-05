@@ -12,11 +12,14 @@ import { Main } from "./components/general/Main";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'normalize-css'
 import { ROUTES } from "./utils/routes";
+import { GlobalStyle } from "./globalStyle";
 
 export const App: React.FC = () => (
     <React.StrictMode>
 
         <FontStyles />
+
+        <GlobalStyle />
 
         <Router>
 
