@@ -59,7 +59,7 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
             if (!questionIds.length)
                 return
 
-            if (questionNumber)
+            if (questionNumber !== undefined)
                 return
 
             const currentQIdFromStorage = getCurrentQIdFromLocalStorage()
