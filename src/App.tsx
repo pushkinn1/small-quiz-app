@@ -9,9 +9,10 @@ import { Wrapper } from "./components/layout";
 import { FontStyles } from "./fonts/fontStyles";
 import { Main } from "./components/general/Main";
 import { GlobalStyle } from "./globalStyle";
-import { ROUTES } from "./utils/routes";
+import { TestPage } from "./components/testThemeRouter";
+import { Home } from "./pages/homePage";
+import { ThemeSelection } from "./components/themeSelection";
 import 'normalize-css'
-
 
 export const App: React.FC = () => (
     <React.StrictMode>
@@ -27,7 +28,20 @@ export const App: React.FC = () => (
                 <Header />
 
                 <Main>
-                    <AppRoutes />
+                    <Routes>
+                        <Route
+                            path="/test/:themeId"
+                            element={<TestPage />}
+                        />
+                        <Route
+                            path="/theme-selection"
+                            element={<ThemeSelection />}
+                        />
+                        <Route
+                            path="/"
+                            element={<Home />}
+                        />
+                    </Routes>
                 </Main>
 
             </Wrapper>
@@ -36,17 +50,3 @@ export const App: React.FC = () => (
 
     </React.StrictMode>
 )
-
-const AppRoutes = () => {
-    return (
-        <Routes>
-            {ROUTES.map(route => (
-                <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                />
-            ))}
-        </Routes>
-    )
-}
