@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Home } from "../components/screens/Home";
+import { Home } from "../pages/homePage";
 import { TestPage } from "../components/testThemeRouter";
 import { ThemeSelection } from "../components/themeSelection";
 import { RouteConfType } from "../type";

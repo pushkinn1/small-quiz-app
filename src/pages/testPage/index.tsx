@@ -1,21 +1,20 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useQuestionIds } from "../../../hooks/useQuestionIds";
-import { AnswerType, QuestionType } from "../../../type";
-import { countResult } from "../../../utils/countResult";
+import { useQuestionIds } from "../../hooks/useQuestionIds";
+import { AnswerType, QuestionType } from "../../type";
+import { countResult } from "../../utils/countResult";
 import {
     getAnswerFromLocalStorage, getCurrentQIdFromLocalStorage,
     pushAnswerIntoLocalStorage, pushCurrentQIdToLocalStorage
-} from "../../../utils/localStorageUsing";
-import { QuestionCard } from "../../questionCard";
+} from "../../utils/localStorageUsing";
+import { QuestionCard } from "../../components/questionCard";
 import { useBeforeunload } from 'react-beforeunload'
-import { SecondaryButton } from "../../buttons";
-import { FlexCol, FlexRow } from "../../layout";
-import { H1 } from "../../general/Typography";
-import { api } from "../../../services/api";
+import { SecondaryButton } from "../../components/buttons";
+import { FlexCol, FlexRow } from "../../components/layout";
+import { api } from "../../services/api";
 import { useEffect, useState } from "react";
-import { RequestErrorMessage } from "../../requestErrorMessage";
-import { Loading } from "../../loading";
+import { RequestErrorMessage } from "../../components/requestErrorMessage";
+import { Loading } from "../../components/loading";
 
 export type TestDisplayProps = {
     themeId: number
@@ -38,8 +37,6 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
     const [result, setResult] = useState<number | undefined>(undefined)
 
     const [requestError, setRequestError] = useState(false)
-
-    const [themeName, setThemeName] = useState('')
 
     const [loading, setLoading] = useState(false)
 

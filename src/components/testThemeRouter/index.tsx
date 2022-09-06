@@ -5,7 +5,7 @@ import { api } from "../../services/api";
 import { H1 } from "../general/Typography";
 import { Loading } from "../loading";
 import { RequestErrorMessage } from "../requestErrorMessage";
-import { TestDisplay } from "../screens/testPage";
+import { TestDisplay } from "../../pages/testPage";
 
 export const TestPage: React.FC = () => {
     const { themeId } = useParams()
