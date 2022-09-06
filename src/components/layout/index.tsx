@@ -17,3 +17,7 @@ export const Wrapper = styled.div`
     margin: 0 auto;
     padding: 1em;
 `
+export const Main = styled.main`
+    padding: 30px 0 100px;
+`
+

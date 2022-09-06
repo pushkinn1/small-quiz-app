@@ -6,8 +6,3 @@ export const H1 = styled.h1`
     line-height: 1.2;
     font-weight: bold;
 `
-
-export const Subtitle = styled.p`
-    font-weight: 400;
-    font-size: 20px;
-`

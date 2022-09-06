@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { SecondaryButton } from "../buttons";
+import { SecondaryButton } from "../../../../components/buttons";
 import { ThemeCardStyle } from "./style";
 
 export type ThemeCardProps = {

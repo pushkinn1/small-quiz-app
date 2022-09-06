@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PropsWithChildren } from "react";
-import { H1 } from "../../components/general/Typography";
+import { H1 } from "../../components/typography";
 
 export const Home: React.FC<PropsWithChildren<{}>> = () => {
     return (

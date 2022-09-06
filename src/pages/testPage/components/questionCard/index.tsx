@@ -1,5 +1,5 @@
 import * as React from "react";
-import { QuestionType } from "../../type";
+import { QuestionType } from "../../../../type";
 import { QuestionCardText } from "./questionCardText";
 import { QuestionCardVariants } from "./questionCardVariants";
 

@@ -1,8 +1,8 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import * as React from "react";
 import { QuestionCardProps } from ".";
-import { SecondaryButton } from "../buttons";
-import { RadioIndicator, RadioItem } from "../radio/";
+import { SecondaryButton } from "../../../../components/buttons";
+import { RadioIndicator, RadioItem } from "../../../../components/radio";
 import { QuestionCardStyle } from "./style";
 
 export const QuestionCardVariants: React.FC<QuestionCardProps> = props => (

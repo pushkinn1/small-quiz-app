@@ -1,8 +1,8 @@
 import * as React from "react";
 import { QuestionCardProps } from ".";
-import { SecondaryButton } from "../buttons";
-import { FlexRow } from "../layout";
-import { TextInput } from "../textInput";
+import { SecondaryButton } from "../../../../components/buttons";
+import { FlexRow } from "../../../../components/layout";
+import { TextInput } from "../../../../components/textInput";
 import { QuestionCardStyle } from "./style";
 
 export const QuestionCardText: React.FC<QuestionCardProps> = props => (

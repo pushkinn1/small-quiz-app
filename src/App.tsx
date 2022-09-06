@@ -5,13 +5,12 @@ import {
     Routes,
 } from "react-router-dom";
 import { Header } from "./components/header";
-import { Wrapper } from "./components/layout";
+import { Wrapper, Main } from "./components/layout";
 import { FontStyles } from "./fonts/fontStyles";
-import { Main } from "./components/general/Main";
 import { GlobalStyle } from "./globalStyle";
-import { TestPage } from "./components/testThemeRouter";
+import { TestPage } from "./pages/testPage";
 import { Home } from "./pages/homePage";
-import { ThemeSelection } from "./components/themeSelection";
+import { ThemeSelection } from "./pages/themeSelection";
 import 'normalize-css'
 
 export const App: React.FC = () => (

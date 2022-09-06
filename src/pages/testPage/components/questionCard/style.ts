@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SecondaryButtonStyle } from "../buttons/style";
+import { SecondaryButtonStyle } from "../../../../components/buttons/style";
 
 export const QuestionCardStyle = styled.div`
 
