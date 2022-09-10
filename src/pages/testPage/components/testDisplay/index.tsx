@@ -15,6 +15,8 @@ import { api } from "../../../../services/api";
 import { useEffect, useState } from "react";
 import { RequestErrorMessage } from "../../../../components/requestErrorMessage";
 import { Loading } from "../../../../components/loading";
+import { useKeypress } from "../../../../hooks/useKeypress";
+import { useQuestions } from "../../../../hooks/useQuestions";
 
 export type TestDisplayProps = {
     themeId: number
@@ -24,143 +26,32 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
 
     const { questionIds } = useQuestionIds(props.themeId)
 
-    const [questionNumber, setQuestionNumber] = useState<number | undefined>(undefined)
-
-    const [currentQuestion, setCurrentQuestion] = useState<QuestionType | undefined>(undefined)
-
     const [testEnded, setTestEnded] = useState(false)
-
-    const [answers, setAnswers] = useState<AnswerType[]>([])
 
     const [currentAnswer, setCurrentAnswer] = useState<string>('')
 
     const [result, setResult] = useState<number | undefined>(undefined)
 
-    const [requestError, setRequestError] = useState(false)
+    const { currentQuestion, loading, requestError, answers, goToNextQuestion, goToPrevQuestion, pushAnswer, questionsOver } = useQuestions(props.themeId)
 
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-
-        const checkIfNoQuestionsLeft = () => (questionIds.length && (questionNumber == questionIds.length))
-
-        const endTest = async () => {
-            const result = await countResult(answers, questionIds)
-
-            setTestEnded(true)
-            setResult(result)
-            localStorage.clear()
-        }
-
-        const actualizeQuestion = () => {
-            if (!questionIds.length)
-                return
-
-            if (questionNumber !== undefined)
-                return
-
-            const currentQIdFromStorage = getCurrentQIdFromLocalStorage()
-
-            if (currentQIdFromStorage) {
-                setQuestionNumber(questionIds.findIndex(el => el == currentQIdFromStorage))
-                return
-            }
-
-            setQuestionNumber(0)
-        }
-
-        const setQuestionAndAnswer = async () => {
-
-            if (!questionIds[questionNumber])
-                return
-
-            setLoading(true)
-
-            try {
-                const currentQId = questionIds[questionNumber]
-
-                const question = await api.questions.getQuestionById(currentQId)
-
-                if (question) {
-                    pushCurrentQIdToLocalStorage(question.id)
-                    setCurrentQuestion(question)
-                    const dataAnswer = answers.find(answer => answer.qId == question.id)
-                    if (dataAnswer) {
-                        setCurrentAnswer(dataAnswer.answer)
-                        return
-                    }
-
-                }
-
-                const storageAnswer = getAnswerFromLocalStorage(getCurrentQIdFromLocalStorage())
-
-                if (storageAnswer) {
-                    setCurrentAnswer(storageAnswer)
-                    return
-                }
-
-                setCurrentAnswer('')
-            }
-
-            catch (err) {
-                setRequestError(true)
-            }
-
-            finally {
-                setLoading(false)
-            }
-
-        }
-
-        if (checkIfNoQuestionsLeft()) {
-            endTest()
-            return
-        }
-
-        actualizeQuestion()
-
-        setQuestionAndAnswer()
-
-    }, [questionNumber, questionIds])
-
-    useEffect(() => {
-        const handleEnterPress = (e: KeyboardEvent) => {
-            if (e.key == 'Enter')
-                onAnswer()
-        }
-        document.addEventListener('keydown', handleEnterPress)
-
-        return () => document.removeEventListener('keydown', handleEnterPress)
-    })
-
+    
+    useKeypress('Enter', () => onAnswer())
+    
     useBeforeunload((e) => {
         e.returnValue = true
     })
+    
+    const endTest = async () => {
+        const result = await countResult(answers, questionIds)
 
-    const onBackButtonClick = () => {
-        if (questionNumber == 0)
-            return
-
-        setQuestionNumber(questionNumber - 1)
+        setTestEnded(true)
+        setResult(result)
+        localStorage.clear()
     }
 
     const onAnswer = () => {
-
-        if (!answers[questionNumber]) {
-            pushAnswerIntoLocalStorage(currentQuestion.id, currentAnswer)
-            setAnswers(answers.concat({
-                qId: currentQuestion.id,
-                answer: currentAnswer
-            }))
-        }
-
-        else {
-            let newAnswers = answers
-            newAnswers[questionNumber].answer = currentAnswer
-            setAnswers(newAnswers)
-        }
-
-        setQuestionNumber(questionNumber + 1)
+        pushAnswer(currentAnswer)
+        goToNextQuestion()
     }
 
     const onAnswerChange = (newAnswer: string) => {
@@ -171,6 +62,10 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
     const onAnswerClear = () => {
         setCurrentAnswer('')
         pushAnswerIntoLocalStorage(currentQuestion.id, '')
+    }
+
+    if (questionsOver) {
+        endTest()
     }
 
     if (loading)
@@ -190,7 +85,7 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
                     <FlexRow gap={20}>
 
                         <SecondaryButton
-                            onClick={onBackButtonClick}
+                            onClick={goToPrevQuestion}
                             variant="small"
                         >
                             Back
