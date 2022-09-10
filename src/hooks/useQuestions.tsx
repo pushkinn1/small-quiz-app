@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react"
 import { api } from "../services/api"
-import { AnswerType, QuestionType } from "../type"
+import { AnswerType, ClientQuestionData, QuestionType } from "../type"
 import { getCurrentQIdFromLocalStorage, pushAnswerIntoLocalStorage, pushCurrentQIdToLocalStorage } from "../utils/localStorageUsing"
 import { useQuestionIds } from "./useQuestionIds"
 
 export const useQuestions = (themeId: number) => {
     const [questionNumber, setQuestionNumber] = useState<number | null>(null)
     const { questionIds } = useQuestionIds(themeId)
-    const [currentQuestion, setCurrentQuestion] = useState<QuestionType | undefined>(undefined)
+    const [currentQuestion, setCurrentQuestion] = useState<ClientQuestionData | undefined>(undefined)
     const [requestError, setRequestError] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [answers, setAnswers] = useState<AnswerType[]>([])
     const [questionsOver, setQuestionsOver] = useState(false)
 
     useEffect(() => {
@@ -45,7 +44,12 @@ export const useQuestions = (themeId: number) => {
 
                 if (question) {
                     pushCurrentQIdToLocalStorage(question.id)
-                    setCurrentQuestion(question)
+                    setCurrentQuestion({
+                        id: question.id,
+                        question: question.question,
+                        type: question.type,
+                        options: question.options
+                    })
                 }
             }
 
@@ -80,25 +84,13 @@ export const useQuestions = (themeId: number) => {
     }
 
     const pushAnswer = (answer: string) => {
-        if (!answers[questionNumber])
-            pushAnswerIntoLocalStorage(currentQuestion.id, answer)
-
-        setAnswers(prevAnswers => {
-            return ([
-                ...prevAnswers,
-                {
-                    qId: questionIds[questionNumber],
-                    answer: answer
-                }
-            ])
-        })
+        pushAnswerIntoLocalStorage(currentQuestion.id, answer)
     }
 
     return {
         currentQuestion,
         loading,
         requestError,
-        answers,
         goToNextQuestion,
         goToPrevQuestion,
         pushAnswer,

@@ -1,17 +1,15 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { useQuestionIds } from "../../../../hooks/useQuestionIds";
-import { AnswerType, QuestionType } from "../../../../type";
 import { countResult } from "../../../../utils/countResult";
 import {
-    getAnswerFromLocalStorage, getCurrentQIdFromLocalStorage,
-    pushAnswerIntoLocalStorage, pushCurrentQIdToLocalStorage
+    getAnswerFromLocalStorage,
+    pushAnswerIntoLocalStorage
 } from "../../../../utils/localStorageUsing";
 import { QuestionCard } from "../questionCard";
 import { useBeforeunload } from 'react-beforeunload'
 import { SecondaryButton } from "../../../../components/buttons";
 import { FlexCol, FlexRow } from "../../../../components/layout";
-import { api } from "../../../../services/api";
 import { useEffect, useState } from "react";
 import { RequestErrorMessage } from "../../../../components/requestErrorMessage";
 import { Loading } from "../../../../components/loading";
@@ -32,25 +30,36 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
 
     const [result, setResult] = useState<number | undefined>(undefined)
 
-    const { currentQuestion, loading, requestError, answers, goToNextQuestion, goToPrevQuestion, pushAnswer, questionsOver } = useQuestions(props.themeId)
+    const { currentQuestion, loading, requestError, goToNextQuestion, goToPrevQuestion, pushAnswer, questionsOver } = useQuestions(props.themeId)
 
-    
+    useEffect(() => {
+        const storageCurrentAnswer = getAnswerFromLocalStorage(currentQuestion?.id)
+        if (storageCurrentAnswer)
+            setCurrentAnswer(storageCurrentAnswer)
+        
+    }, [currentQuestion])
+
+    useEffect(() => {
+        if (questionsOver)
+            endTest()
+    }, [questionsOver])
+
     useKeypress('Enter', () => onAnswer())
-    
+
     useBeforeunload((e) => {
         e.returnValue = true
     })
-    
+
     const endTest = async () => {
-        const result = await countResult(answers, questionIds)
+        const result = await countResult(questionIds)
 
         setTestEnded(true)
         setResult(result)
-        localStorage.clear()
     }
 
-    const onAnswer = () => {
+    const onAnswer = () => {        
         pushAnswer(currentAnswer)
+        setCurrentAnswer('')
         goToNextQuestion()
     }
 
@@ -62,10 +71,6 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
     const onAnswerClear = () => {
         setCurrentAnswer('')
         pushAnswerIntoLocalStorage(currentQuestion.id, '')
-    }
-
-    if (questionsOver) {
-        endTest()
     }
 
     if (loading)

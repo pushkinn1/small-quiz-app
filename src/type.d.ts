@@ -2,9 +2,11 @@ export type QuestionType = {
     id: number
     question: string
     options?: string[]
-    answer: string | string[]
+    answer: string 
     type: QuestionVariant
 }
+
+export type ClientQuestionData = Omit<QuestionType, 'answer'>
 
 export type AnswerType = {
     qId: number

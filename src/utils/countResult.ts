@@ -2,31 +2,29 @@ import { api } from "../services/api";
 import { AnswerType } from "../type";
 import { getAnswerFromLocalStorage } from "./localStorageUsing";
 
-export const countResult = async (answers: AnswerType[], qIds: number[]) => {
+export const countResult = async (qIds: number[]) => {
     let result = 0
 
     let storageAnswers: AnswerType[] = []
 
-    let fullAnswers = answers
-
     qIds.forEach(id => {
-        if (!answers.find(el => el.qId == id)) {
-            const storageAnswer = getAnswerFromLocalStorage(id)
+        const storageAnswer = getAnswerFromLocalStorage(id)
 
-            if (storageAnswer)  
-                storageAnswers.push({
-                    qId: id,
-                    answer: storageAnswer
-                })
-        }
+        if (storageAnswer)
+            storageAnswers.push({
+                qId: id,
+                answer: storageAnswer
+            })
     })
 
-    fullAnswers = answers.concat(storageAnswers)
+    console.log(storageAnswers, 'st');
+    
+    
 
-    for (let answer of fullAnswers) {
+    for (let answer of storageAnswers) {
 
         const correctAnwer = (await api.questions.getQuestionById(answer.qId)).answer
-    
+
         if (answer.answer == correctAnwer) {
             result++
         }

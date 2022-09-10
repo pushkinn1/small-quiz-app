@@ -1,9 +1,9 @@
 import * as React from "react";
-import { QuestionType } from "../../../../type";
+import { ClientQuestionData, QuestionType } from "../../../../type";
 import { QuestionCardText } from "./questionCardText";
 import { QuestionCardVariants } from "./questionCardVariants";
 
-export type QuestionCardProps = QuestionType & {
+export type QuestionCardProps = ClientQuestionData & {
     onAnswerChange: (newAnswer: string) => void
     onAnswer: () => void
     currentAnswer: string 
