@@ -124,7 +124,7 @@ export const TestDisplay: React.FC<TestDisplayProps> = props => {
                 testEnded &&
                 <>
                     test ended. your result {result != undefined ? result : 'loading'}
-                    <Link to='/'>
+                    <Link to='/' replace>
                         <SecondaryButton variant="small">
                             Go home
                         </SecondaryButton>
