@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
-const isDevelopment = !env.mode == 'production'
+const isDevelopment = !(env.mode == 'production')
 return ({
     entry: "./src/index.tsx",
     output: {
