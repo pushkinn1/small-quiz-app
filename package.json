@@ -5,7 +5,8 @@
   "main": "index.js",
   "homepage": "https://pushkinn1.github.io/smallQuizApp.com",
   "scripts": {
-    "start": "webpack && npx webpack serve",
+    "dev": "webpack --mode development && npx webpack serve",
+    "prod": "webpack",
     "start:api": "npx json-server -w ./src/db.json",
     "build": "webpack"
   },

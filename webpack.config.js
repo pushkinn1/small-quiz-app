@@ -1,7 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+module.exports = (env, argv) => {
+const isDevelopment = !env.mode == 'production'
+return ({
     entry: "./src/index.tsx",
     output: {
         filename: 'bundle.js',
@@ -24,6 +26,7 @@ module.exports = {
             }
         ]
     },
+    mode: isDevelopment ? 'development' : 'production',
     resolve: {
         extensions: [ '.tsx', '.ts', '.js' ],
     },
@@ -35,12 +38,17 @@ module.exports = {
         compress: true,
         port: 9002
     },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
             publicPath: '/',
             inject: 'body'
         }),
-    ],
-    mode: 'development',
+    ]
+})
 }
